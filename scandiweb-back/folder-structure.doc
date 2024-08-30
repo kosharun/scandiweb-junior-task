@@ -1,0 +1,25 @@
+/backend/
+│
+├── /app/
+│   ├── /config/         # Configuration files (e.g., database connection)
+│   ├── /controllers/    # Contains classes to handle business logic
+│   ├── /models/         # Contains OOP models for your entities (Product, Category, etc.)
+│   ├── /resolvers/      # GraphQL resolvers
+│   ├── /schemas/        # GraphQL schemas
+│   ├── /services/       # Service classes for various functionalities (e.g., ProductService)
+│   └── /utils/          # Utility functions (e.g., helpers, validators)
+│
+├── /public/             # Publicly accessible files (e.g., images, assets)
+│
+├── /routes/             # Register routes for the API
+│   ├── api.php          # Entry point for API routes
+│
+├── /scripts/            # Migration and seed scripts, if necessary
+│
+├── /storage/            # File uploads and other storage
+│
+├── composer.json        # PHP dependencies
+├── composer.lock
+├── .env                 # Environment variables
+├── .htaccess            # Apache configuration (if necessary)
+└── index.php            # Entry point for the PHP application
