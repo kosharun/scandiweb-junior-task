@@ -12,7 +12,7 @@ class AttributeType extends ObjectType
         $config = [
             'name' => 'Attribute',
             'fields' => [
-                'displayValue' => ['type' => Type::string()],
+                'display_value' => ['type' => Type::string()],
                 'value' => ['type' => Type::string()],
                 'id' => ['type' => Type::string()],
                 '__typename' => ['type' => Type::string()],

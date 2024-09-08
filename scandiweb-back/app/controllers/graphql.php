@@ -45,63 +45,6 @@ class GraphQL {
     static public function handle() {
         try {
 
-
-
-            $kategorijaTip = new ObjectType([
-                'name' => 'Kategorija',
-                'fields' => [
-                    'id' => Type::id(),
-                    'name' => Type::string(),
-                ],
-            ]);
-
-            $kveri = new ObjectType([
-                'name' => 'Kveri',
-                'fields' => [
-                    'kategorije' => [
-                        'type' => Type::listOf($kategorijaTip),
-                        'resolve' => function() {
-                            return ['id' => 1, 'name' => 'Clothes'];
-                        }
-                    ],
-                ],
-            ]);
-
-            $sema = new Schema(
-                (new SchemaConfig())
-                ->setQuery($kveri)
-            );
-
-            
-            
-            $variableValues = $input['variables'] ?? null;
-
-            $result = GraphQLBase::executeQuery($sema, $kveri, null, null, $variableValues);
-            $output = $result->toArray();
-
-
-            
-            $rawInput = file_get_contents('php://input');
-
-            if ($rawInput === null) {
-                throw new RuntimeException('Invalid input: request body is null');
-            }
-
-            $input = json_decode($rawInput, true);
-            $query = $input['kveri'];
-            $variableValues = $input['variables'] ?? null;
-
-            $result = GraphQLBase::executeQuery($sema, $kveri, null, null, $variableValues);
-            $output = $result->toArray();
-
-
-
-
-
-
-
-
-
             $clothesProductModel = new ClothesProduct();
             $techProductModel = new TechProduct();
             $allProductsModel = new AllProducts();
@@ -204,7 +147,26 @@ class GraphQL {
             ]);
             
 
+            // Schema configuration
+            $schema = new Schema(
+                (new SchemaConfig())
+                ->setQuery($queryType)
+                ->setMutation($mutationType)
+            );
+
             
+            $rawInput = file_get_contents('php://input');
+
+            if ($rawInput === null) {
+                throw new RuntimeException('Invalid input: request body is null');
+            }
+
+            $input = json_decode($rawInput, true);
+            $query = $input['query'];
+            $variableValues = $input['variables'] ?? null;
+
+            $result = GraphQLBase::executeQuery($schema, $query, null, null, $variableValues);
+            $output = $result->toArray();
         } catch (Throwable $e) {
             $output = [
                 'error' => [
