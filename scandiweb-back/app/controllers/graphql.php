@@ -38,6 +38,7 @@ use App\GraphQL\Types\PriceType;
 use App\GraphQL\Types\AttributeSetType;
 use App\GraphQL\Types\CategoryType;
 use App\GraphQL\Types\OrderItemType;
+use App\GraphQL\Types\PlaceOrderResponseType;
 use App\GraphQL\Types\ProductType;
 use GraphQL\Type\Definition\InputObjectType;
 
@@ -127,20 +128,23 @@ class GraphQL {
                 'name' => 'Mutation',
                 'fields' => [
                     'PlaceOrder' => [
-                        'type' => Type::string(),
+                        'type' => new PlaceOrderResponseType(),
                         'args' => [
                             'order_items' => Type::listOf($orderItemType),
                             'price' => Type::float(),
                             'currency' => Type::string(),
                         ],
                         'resolve' => function($root, $args) use ($orderModel, $orderItemModel) {
-
                             $orderId = $orderModel->create($args['price'], $args['currency']);
                             $inputOrderItems = $args['order_items'];
                             foreach ($inputOrderItems as $orderItem) {
-                                $orderItemModel->create($orderId, $orderItem['product_id'], $orderItem['quantity']);
+                                $orderItemModel->create($orderId, $orderItem['product_id'], $orderItem['quantity'], $orderItem['attributes']);
                             }
-                            return "Order placed";
+                            return [
+                                'success' => true,
+                                'orderId' => $orderId,
+                                'message' => 'Order placed successfully',
+                            ];
                         }
                     ],
                 ],

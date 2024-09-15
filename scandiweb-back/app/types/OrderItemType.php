@@ -13,6 +13,7 @@ class OrderItemType extends InputObjectType {
             'fields' => [
                 'product_id' => ['type' => Type::id()],
                 'quantity' => ['type' => Type::int()],
+                'attributes' => ['type' => Type::listOf(new AttributeInputType())],
             ],
         ];
         parent::__construct($config);
