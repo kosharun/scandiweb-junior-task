@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200); 
     exit();
 }
+
 $dispatcher = simpleDispatcher(function(RouteCollector $r) {
     $r->post('/graphql', [GraphQL::class, 'handle']);
 });
