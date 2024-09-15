@@ -1,0 +1,19 @@
+/frontend/
+│
+├── /public/             # Publicly accessible files (e.g., index.html)
+│
+├── /src/
+│   ├── /components/     # Reusable React components
+│   ├── /pages/          # Different pages (ProductList, ProductDetails, etc.)
+│   ├── /graphql/        # GraphQL queries and mutations
+│   ├── /styles/         # CSS or SCSS files
+│   ├── /utils/          # Utility functions (helpers, formatters, etc.)
+│   ├── /context/        # React context for global state management
+│   ├── App.js           # Main App component
+│   ├── index.js         # Entry point for React
+│   └── index.css        # Global CSS styles
+│
+├── .gitignore
+├── package.json         # Node.js dependencies
+├── package-lock.json
+└── .env                 # Environment variables for frontend (e.g., API URL)
